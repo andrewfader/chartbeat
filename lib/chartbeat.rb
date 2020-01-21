@@ -27,12 +27,9 @@ class Chartbeat
 
     query = *args
     query_to_perform = {:apikey => @apikey, :host => @host}
-    # DEFAULT_ARG_VALS.each do |k,v|
-    #   if query && query[k]
-    #     v = query[k]
-    #   end
-    #   query_to_perform[k] = v
-    # end
+    query.each do |k,v|
+      query_to_perform[k] = v
+    end
     prefix = DASHAPI_METHODS.include?(m) ? '/dashapi' : '/live'
     data = Crack::JSON.parse(RestClient.get("http://" + BASE_URI + prefix + '/' + m.to_s + '/v3/', :params => query_to_perform))
   end
